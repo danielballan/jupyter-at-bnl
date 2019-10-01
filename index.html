@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Jupyter at BNL</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
@@ -25,8 +25,167 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+                <section>
+                    <section>
+                        <h1>Jupyter at BNL</h1>
+                    </section>
+                    <section>
+                        <p>National Synchrotron Light Source II</p>
+                        <img src="assets/NSLS-II-from-above.jpg" />
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>Trial Deployment</h1>
+                        <p>July 2019, starting from JupyterHub v0.1</p>
+                    </section>
+                    <section>
+                        <ul>
+                            <li>Hub and all user servers share one VM.</li>
+                            <li>Kernels are distributed on instrument-specific compute resources.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <img src="assets/remote-kernel-schematic.png" />
+                    </section>
+                    <section>
+                        <p>Each kernel is designated to run on a specific host.</p>
+                        <img src="assets/kernel-selection-screenshot.png" />
+                    </section>
+                    <section>
+                        <img src="assets/remote-kernel-gh-screenshot.png" />
+                    </section>
+                    <section>
+                        <p>Example <code>kernel.json</code>, specifying a host:</p>
+                        <pre><code>{"argv":["python", "-m", "ipykernel.ipykernel_laucnher",
+         "-f", "{connection_file}"],
+"display_name":"Python 3 on Remote",
+"host":"&lt;HOSTNAME&gt;" }</code></pre>
+                    </section>
+                    <section>
+                        <p>Lessons Learned</p>
+                        <ul>
+                            <li>Trade-offs of running Jupyter servers and kernels on separate hosts</li>
+                            <li>Kernel environment alone is insufficient for reproducibility</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>New Deployment</h1>
+                        <p>a work in progress</p>
+                    </section>
+                    <section>
+                        <p>Decamping both compute and data across site to the Scientific Data & Computing Center (SDCC)</p>
+                        <table>
+                            <tr>
+                                <td><img src="assets/NSLS-II-rainbow.jpg" /></td>
+                                <td><img src="assets/CSI.jpg" /></td>
+                            </tr>
+                        </table>
+                    </section>
+                    <section>
+                        <p>Centralize Kernels on Dedicated Nodes</p>
+                        <ul>
+                            <li>Discarding "remote kernel" architecture</li>
+                            <li>Using batchspawner on dedicated nodes</li>
+                            <li>Data transferred to shared file system during/after acquisition</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>Sharing Notebooks</h1>
+                    </section>
+                    <section>
+                        <p>Who is my audience?</p>
+                    </section>
+                    <section>
+                        <p>How Far Does your Code Go?</ p>
+                        <img src="assets/how-far-phase-space.svg" />
+                    </section>
+                    <section>
+                        <p>Should you take the trouble to...</p>
+                        <ul>
+                            <li>Ensure cells execute top to bottom</li>
+                            <li>Refactor large code blocks into modules</li>
+                            <li>Use version control (nbdime!)</li>
+                            <li>Specify software dependencies in
+                                <code>requirements.txt</code> or
+                                <code>environment.yml</code>.
+                        </ul>
+                    </section>
+                    <section>
+                        <img src="assets/how-far-phase-space.svg" />
+                    </section>
+                    <section>
+                        <ul>
+                            <li>Are the sender and recipient on the same Hub?</li>
+                            <li>Is the notebook being "published" for long-term reuse by many people?</li>
+                            <li>Is the unit being shared just one notebook or a collection of notebooks? Are there additional files necessary to run them?</li>
+                            <li>Does the notebook have specialized resource requirements?</li>
+                        </ul>
+                    </section>
+                    <section>
+                        Effort (or Expertise) for Recipient vs Sender
+                        <img src="assets/effort-status-quo.svg" />
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><code>nbexamples</code></p>
+                        <p>our first attempt to improve on emailing notebooks</p>
+                        <a href="https://github.com/danielballan/nbexamples">github.com/danielballan/nbexamples</a>
+                    </section>
+                    <section>
+                        <p><code>nbexamples</code></p>
+                        <p>To share, user clicks a button in the notebook toolbar</p>
+                        <img src="assets/nbexamples-share-button.png" />
+                    </section>
+                    <section>
+                        <p><code>nbexamples</code></p>
+                        <p>Users can browse all shared notebooks</p>
+                        <img src="assets/nbexamples-tab.png" />
+                    </section>
+                    <section>
+                        <p><code>nbexamples</code></p>
+                        <p>A copy is made in the recipient's working directory</p>
+                        <img src="assets/nbexamples-dialog.png" />
+                    </section>
+                    <section>
+                        <p>Drawbacks similar to emailing a notebook</p>
+                        <ul>
+                            <li>The shared directory quickly becomes a junk drawer.</li>
+                            <li>The notebooks do not know what environment they run in.</li>
+                            <li>Recipient could have missing dependencies or incompatible versions.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <p>Related Projects, similar drawbacks</p>
+                        <ul>
+                            <li><code>nbviewer</code> <a href="https://github.com/jupyter/nbviewer">github.com/jupyter/nbviewer</a></li>
+                            <li><code>bookstore</code> <a href="https://github.com/nteract/bookstore">github.com/nteract/bookstore</a></li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><code>jupyterhub-share-link</code></p>
+                        <p>a better solution for low-effort short-term sharing</p>
+                        <a href="https://github.com/danielballan/jupyterhub-share-link">github.com/danielballan/jupyterhub-share-link</a>
+                    </section>
+                    <section>
+                        <img src="assets/demo.gif" />
+                    </section>
+                    <section>
+                        <ul>
+                            <li>This works for local process spawners and container-based spawners.</li>
+                            <li>Recipient is put into a server using the same env/continaer as the sender.</li>
+                            <li>Copying happens via Jupyter REST API. No shared file sytem assumed.</li>
+                            <li>No extra state, just a key pair controlled by the Hub Serivce, used to sign and verify the share links.</li>
+                        </ul>
+                    </section>
+                </section>
 			</div>
 		</div>
 
