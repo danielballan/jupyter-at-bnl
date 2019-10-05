@@ -95,7 +95,42 @@
                 </section>
                 <section>
                     <section>
+                        <h3>NSLS-II Tutorial Binder</h3>
+                    </section>
+                    <section>
+                        <ul>
+                            <li><a href="https://try.nsls2.bnl.gov">try.nsls2.bnl.gov</a></li>
+                            <li>Code at <a href="https://github.com/bluesky/tutorial">github.com/bluesky/tutorial</a></li>
+                            <li>Used in organized tutorials</li>
+                            <li>Users may follow up later on their on</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>EPICS IOCs in a Binder</h3>
+                        <ul>
+                            <li>Binder provides the hooks you need to do this.</li>
+                            <li>Users can design and rehearse their experiments.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Rich Outputs Help User Interaction</h3>
+                    </section>
+                    <section>
+                        <img src="assets/dask-array-repr.png" />
+                    </section>
+                    <section>
+                        <img src="assets/xarray-html-repr.png" />
+                    </section>
+                    <section>
+                        <img src="assets/sympy-rich-output.png" />
+                    </section>
+                </section>
+                <section>
+                    <section>
                         <h3>Sharing Notebooks</h3>
+                    </section>
+                    <section>
+                        <img src="assets/real-time.jpeg" width=400px />
                     </section>
                     <section>
                         <p>Who is my audience?</p>
@@ -179,12 +214,69 @@
                     </section>
                     <section>
                         <ul>
-                            <li>This works for local process spawners and container-based spawners.</li>
-                            <li>Recipient is put into a server using the same env/continaer as the sender.</li>
+                            <li>This works for local spawners, container-based, batch spawners.</li>
+                            <li>Recipient is put into a server using the same env/container as the sender.</li>
                             <li>Copying happens via Jupyter REST API. No shared file sytem assumed.</li>
                             <li>No extra state, just a key pair controlled by the Hub Serivce, used to sign and verify the share links.</li>
                         </ul>
                     </section>
+                </section>
+                <section>
+                    <section>
+                        <p>What about long-term, "publish"-style sharing?</p>
+                    </section>
+                    <section>
+                        <img src="assets/effort-new-ideas.svg" />
+                    </section>
+                    <section>
+                        <p>Binder</p>
+                        <ul>
+                            <li>An opinionated JupyterHub distribution</li>
+                            <li>Reproducible Execution Environment Spec</li>
+                            <li>Uses <em>existing</em> standards and best practices (e.g. <code>requirements.txt</code>) and rewards them</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <p>Some of Binder's "opinions" aren't a great fit for us</p>
+                        <ul>
+                            <li>Fully open, no authentication</li>
+                            <li>No persistent storage, container is deleted after some timeout</li>
+                            <li>Uses containers</li>
+                            <li>Requires Kubernetes (unless images are pre-built)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <p>What else could we assemble from the components of Binder?</p>
+                        <img src="assets/effort-new-ideas.svg" />
+                    </section>
+                    <section>
+                        <p>Ideas...</p>
+                        A JupyterHub Service that builds an environment from a REES without requiring Kubernetes?
+                        <p>That is, a REST API to <a href="https://github.com/jupyter/repo2docker">repo2docker</a></p>
+                    </section>
+                    <section>
+                        <p>Ideas...</p>
+                        An alternate builder that builds a conda environment instead of a container, for the subset of REES where this is possible (i.e. no Dockerfile support of course)
+                        <p>That is, a variant on <a href="https://github.com/jupyter/repo2docker">repo2docker</a></p> that makes a <a href="https://github.com/conda/conda-pack">conda-pack</a> instead of an image</p>
+                    </section>
+                    <section>
+                        <p>Ideas...</p>
+                        A gallery of REES containers published by other users with options to spawn in a container that mounts the recipient’s local storage to provide persistence
+                        <p>Related:
+                        <ul>
+                            <li><a href="https://voila-gallery.org/">voila-gallery.org</a></li>
+                            <li><a href="https://github.com/jupyterhub/nbgitpuller">github.com/jupyterhub/nbgitpuller</a></li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Thanks</h3>
+                        <ul>
+                            <li>Mizuki Karasawa, Will Strecker-Kellogg, and Ofer Rind at SDCC</li>
+                            <li>The NSLS-II Controls Group</li>
+                            <li>The Jupyter Community</li>
+                        </ul>
                 </section>
 			</div>
 		</div>
